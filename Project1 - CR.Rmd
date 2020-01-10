@@ -1,0 +1,81 @@
+---
+title: "STA 207 Project 1"
+author: "Connor Rosenberg"
+date: "1/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#Prepare Data
+
+library("AER")
+library("sqldf")
+library("ggplot2")
+library("car")
+
+data("STAR")
+
+star = sqldf("SELECT  gender, ethnicity, birth, star1, math1, lunch1,school1, degree1, ladder1, experience1, tethnicity1,system1, schoolid1 FROM STAR")
+
+star = star1[complete.cases(star),] #Eliminate all cases w/ NA
+```
+
+```{r}
+#Other org.
+
+
+#             Femlae    Male
+color2 = c("#72EABD", "#7C8FF3")
+```
+
+
+```{r}
+#Summary Statistics
+
+summary(star1)
+
+count = table(star$gender)
+pie(as.vector(count), labels = names(count), col=color2, main = "Overall Gender")
+
+count = table(star$ethnicity)
+pie(as.vector(count), labels = names(count), col=color2, main = "Overall Ethnicity")
+
+count = table(star$star1)
+pie(as.vector(count), labels = names(count), main = "Overall Class Distribution")
+
+boxplot(star1$math1~star1$star1)
+boxplot(star1$math1~star1$ethnicity)
+boxplot(star1$math1~star1$lunch1)
+boxplot(star1$experience1~star1$star1)
+
+## Test for variance homogeneity
+leveneTest(math1~star1, data = star) #Equal Variacnes
+
+
+#One-Way ANOVA for STAR1
+reg1 = lm(math1~star1, data = star)
+summary(reg1)
+anova1 = anova(reg1)
+anova1
+boxplot(star1$math1~star1$star1)
+
+plot(reg1,2)
+
+
+
+
+
+means = aggregate(math1 ~ star1, star, mean)
+ggplot(data = star,
+       aes(x=star1,y=math1,fill=star1))+
+  geom_boxplot()+
+  stat_summary(fun.y = mean, colour = "black", geom = "point",shape = 18, size = 2, show_guide = FALSE) +
+  geom_text(data = means, aes(label = round(math1,2), y=math1+10))
+
+
+```
+
