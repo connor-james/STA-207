@@ -74,12 +74,19 @@ summary(star)
 count = data.frame(table(star$gender))
 pieGender = plot_ly(count, labels = ~Var1, values = ~Freq, type = 'pie') %>%
   layout(title = "Gender of Participating Studnets")
+pieGender
 ```
 
 
-```{r}
+```{r, include=FALSE}
+#Task 4
+```
 
-## Test for variance homogeneity
+
+```{r, include = FALSE}
+#Fitting the model
+
+# Test for variance homogeneity
 leveneTest(math1~star1, data = star) #Equal Variacnes
 
 
@@ -88,21 +95,14 @@ reg1 = lm(math1~star1, data = star)
 summary(reg1)
 anova1 = anova(reg1)
 anova1
-boxplot(star1$math1~star1$star1)
+boxplot(star$math1~star$star1)
 
 plot(reg1,2)
+plot(reg1)
 
 
-
-
-
-means = aggregate(math1 ~ star1, star, mean)
-ggplot(data = star,
-       aes(x=star1,y=math1,fill=star1))+
-  geom_boxplot()+
-  stat_summary(fun.y = mean, colour = "black", geom = "point",shape = 18, size = 2, show_guide = FALSE) +
-  geom_text(data = means, aes(label = round(math1,2), y=math1+10))
-
-
+#Plot of boxplot of math scores broken by class type
+box1 = plot_ly(star, y = ~math1, color = ~star1, type = "box")
+box1
 ```
 
