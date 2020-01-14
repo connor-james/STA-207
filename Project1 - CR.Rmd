@@ -13,7 +13,6 @@ knitr::opts_chunk$set(echo = TRUE)
 #Required Packages
 
 library("AER")
-library("sqldf")
 library("ggplot2")
 library("car")
 library("dplyr")
@@ -26,7 +25,8 @@ library("plotly")
 
 data("STAR")
 
-star = sqldf("SELECT  gender, ethnicity, birth, star1, math1, lunch1,school1, degree1, ladder1, experience1, tethnicity1,system1, schoolid1 FROM STAR")
+star = data.frame( "gender" = STAR$gender, "ethnicity" = STAR$ethnicity, "star1" = STAR$star1, "math1" = STAR$math1)
+
 
 star = star[complete.cases(star),] #Eliminate all cases w/ NA
 ```
@@ -105,4 +105,21 @@ plot(reg1)
 box1 = plot_ly(star, y = ~math1, color = ~star1, type = "box")
 box1
 ```
+
+```{r, include = FALSE}
+#Write the reprt below
+```
+
+
+# Introduction
+
+## Background
+
+##Questions of Interest
+
+#Methods & Analysis
+
+##Descriptive Analysis
+
+
 
