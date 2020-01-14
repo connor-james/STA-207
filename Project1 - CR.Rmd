@@ -1,5 +1,5 @@
 ---
-title: "STA 207 Project 1"
+title: "Capturing effects of class sizes with classroom performacne"
 author: "Connor Rosenberg"
 date: "1/10/2020"
 output: html_document
@@ -9,48 +9,75 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
-#Prepare Data
+```{r, include=FALSE}
+#Required Packages
 
 library("AER")
 library("sqldf")
 library("ggplot2")
 library("car")
+library("dplyr")
+library("plotly")
+
+```
+
+```{r, include=FALSE}
+#Prepare Data
 
 data("STAR")
 
 star = sqldf("SELECT  gender, ethnicity, birth, star1, math1, lunch1,school1, degree1, ladder1, experience1, tethnicity1,system1, schoolid1 FROM STAR")
 
-star = star1[complete.cases(star),] #Eliminate all cases w/ NA
+star = star[complete.cases(star),] #Eliminate all cases w/ NA
 ```
 
-```{r}
-#Other org.
+```{r, include=FALSE}
+#Check data & objects
+
+#str(star)
+
+star$gender = as.factor(star$gender)
+star$ethnicity = as.factor(star$ethnicity)
+star$star1 = as.factor(star$star1)
+star$lunch1 = as.factor(star$lunch1)
+star$degree1 = as.factor(star$degree1)
+star$ladder1 = as.factor(star$ladder1)
+star$tethnicity1 = as.factor(star$tethnicity1)
+star$system1 = as.factor(star$system1)
+star$schoolid1 = as.factor(star$schoolid1)
+
+```
 
 
-#             Femlae    Male
-color2 = c("#72EABD", "#7C8FF3")
+```{r, include= FALSE}
+#Set colors for pretty pictures
+
+color2 = c("#FF6868", "#54B7FF")
+color3 = c("#FF6868", "#54B7FF", "97FF68")
+color4 = c("#FF6868", "#54B7FF", "97FF68", "#A168FF")
+color5 = c("#FF6868", "#54B7FF", "97FF68", "#A168FF", "#FFB768")
+color5 = c("#FF6868", "#54B7FF", "97FF68", "#A168FF", "#FFB768", "#FFE068")
+ 
+
+#NOTE: colors will be assigned to factors in alphabetical order
+```
+
+
+```{r, include=FALSE}
+#Task 1 Summary Statistics:
+#NOTE: Please save all figures as objects to be called later in the report
+#NOTE: Use plotly package to make everything consistant https://plot.ly/r
+
+summary(star)
+
+#Boxplot of Gender
+count = data.frame(table(star$gender))
+pieGender = plot_ly(count, labels = ~Var1, values = ~Freq, type = 'pie') %>%
+  layout(title = "Gender of Participating Studnets")
 ```
 
 
 ```{r}
-#Summary Statistics
-
-summary(star1)
-
-count = table(star$gender)
-pie(as.vector(count), labels = names(count), col=color2, main = "Overall Gender")
-
-count = table(star$ethnicity)
-pie(as.vector(count), labels = names(count), col=color2, main = "Overall Ethnicity")
-
-count = table(star$star1)
-pie(as.vector(count), labels = names(count), main = "Overall Class Distribution")
-
-boxplot(star1$math1~star1$star1)
-boxplot(star1$math1~star1$ethnicity)
-boxplot(star1$math1~star1$lunch1)
-boxplot(star1$experience1~star1$star1)
 
 ## Test for variance homogeneity
 leveneTest(math1~star1, data = star) #Equal Variacnes
