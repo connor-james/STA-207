@@ -158,7 +158,7 @@ After fitting the cell means model described above, we found significnat evidenc
 anova1
 ```
 
-
+Both the Regular+Aide & Small class sizes returned an increase in average math scores compared to the regualr class treatment group. The average score for students in regular classes was 525.28. Students enrolled in Regular + Aide classes perfomred on average 4.35 scaled points higher than regular class students. Similarly, Students enrolled in Regular + Aide classes perfomred on average 13.40 scaled points higher than regular class students.
 
 ```{r,fig.width=3, fig.height=2, echo = FALSE}
 effect = (data.frame(reg1$coefficients))
@@ -167,6 +167,8 @@ effect1 = data.frame( "Class Size" = c("Regular", "Regular + Aide","Small"), "Av
 
 kable(effect1) %>% kable_styling(bootstrap_options = "striped", full_width = F)
 ```
+### Model Diagnostic
+
 
 
 ### Sensitivity Analysis
