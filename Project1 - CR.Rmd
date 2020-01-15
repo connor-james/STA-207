@@ -17,6 +17,7 @@ library("ggplot2")
 library("car")
 library("dplyr")
 library("plotly")
+library("sqldf")
 
 ```
 
@@ -59,7 +60,19 @@ pieGender
 
 
 ```{r, include=FALSE}
-#Task 4
+
+a = sqldf("SELECT math1 FROM star WHERE star1 == 'small'")
+b = sqldf("SELECT math1 FROM star WHERE star1 == 'regular+aide'")
+c = sqldf("SELECT math1 FROM star WHERE star1 == 'regular'")
+
+hist2 <- plot_ly(alpha = 0.1) %>%
+  add_histogram(x = ~a$math1) %>%
+  add_histogram(x = ~b$math1) %>%
+  add_histogram(x = ~c$math1) %>%
+  layout(barmode = "overlay")
+
+hist2
+
 ```
 
 
@@ -94,11 +107,11 @@ box1
 
 ## Background
 
-##Questions of Interest
+## Questions of Interest
 
-#Methods & Analysis
+# Methods & Analysis
 
-##Descriptive Analysis
+## Descriptive Analysis
 
 ## One-Way ANOVA Model
 For our analysis, we selected the cell means ANOVA model to capture the effects of each of  differet class treatment. This model is most useful in our analysis becasure it represents the expected change in math test-score of a studnet from the standard regular class. The final model selected in this analysis is described below.
@@ -111,8 +124,37 @@ $X_3 = 1$ if the stduent is assigned to a regular + aid class and $0$ otherwise.
 
 In this model, $\mu$ represnets the average first-grade math test-score for studnets enrolled in regular classes. Furthermore, $T_2$ represents the average change in score for studnets enrolled in small classes and $T_3$ represnets the average change in score for studnets enrolled in regualr+aid clases, both compared to the regular class treatment. 
 
-###Model Results
-After 
+Before fitting the model described above, it is imporatnt to examine the model assumptions.
+
+1) Normailty
+
+Examining the histogram of math scores across each of the three different classroom treatments, we can see that the scores of each treatment appear to follow a normal-like distribution. We can also note that each treatment distribution has slightly heavy left-tails; however, they do not deviate too much from our model assumptions and therefore, we may continue without transformating our data to fit this assumption.  
+```{r, fig.width=8, fig.height=6, echo = FALSE}
+hist2
+```
+
+2) Independence
+
+It is not reasonable to assume a strict independce of our samples through this study. Studnets may study together, teachers may share materials, or parents may seek out tutoring for thier child. However, this study represnets the most controlled and rhobust method we could possible obtain to examine the effects of class size of math test scores of first graders. Paired with the large sample size, while these smaples are not strictly independnet we can consider them practically indepenent since the study represents the most controlled enviorment we could possible obtain.
+
+3) Equality of Variance
+
+
+```{r, echo=FALSE}
+leveneTest(math1~star1, data = star) #Equal Variacnes
+```
+
+
+### Model Results
+
+
+
+After constructing the cell means model described above, we found significnat evidence that the  
+
+```{r, echo=FALSE}
+anova1
+```
+
 
 ### Sensitivity Analysis
 
