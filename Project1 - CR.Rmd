@@ -18,6 +18,7 @@ library("car")
 library("dplyr")
 library("plotly")
 library("sqldf")
+library("kableExtra")
 
 ```
 
@@ -111,6 +112,8 @@ box1
 
 # Methods & Analysis
 
+
+
 ## Descriptive Analysis
 
 ## One-Way ANOVA Model
@@ -139,20 +142,30 @@ It is not reasonable to assume a strict independce of our samples through this s
 
 3) Equality of Variance
 
+From the histograms pictured above, it does appear that the distribution of first-grade test scores across the three treatments have the same varaince. And after specifying an alpha of $.o5$ The lavene test for euality of variances did not return significnat evidnce that the variances between grops was significantly different. Therefore, we may assume equaltiy of variances between treatment groups. 
 
 ```{r, echo=FALSE}
 leveneTest(math1~star1, data = star) #Equal Variacnes
 ```
 
+With all three of our model assumptions verrifeid, we can continue to fit our ANOVA model.
 
 ### Model Results
 
-
-
-After constructing the cell means model described above, we found significnat evidence that the  
+After fitting the cell means model described above, we found significnat evidence to suggust that at least one of the classroom treatments exhibited a different score distribtion compared to that of regular class size.
 
 ```{r, echo=FALSE}
 anova1
+```
+
+
+
+```{r,fig.width=3, fig.height=2, echo = FALSE}
+effect = (data.frame(reg1$coefficients))
+effect1 = data.frame( "Class Size" = c("Regular", "Regular + Aide","Small"), "Average Math Score" = c(525.28,529.63,538.68), "Change from Regular" = c("",4.35,13.40), "Significant" = c("","YES", "YES"))
+
+
+kable(effect1) %>% kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
 
