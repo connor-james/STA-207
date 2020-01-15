@@ -39,27 +39,7 @@ star = star[complete.cases(star),] #Eliminate all cases w/ NA
 star$gender = as.factor(star$gender)
 star$ethnicity = as.factor(star$ethnicity)
 star$star1 = as.factor(star$star1)
-star$lunch1 = as.factor(star$lunch1)
-star$degree1 = as.factor(star$degree1)
-star$ladder1 = as.factor(star$ladder1)
-star$tethnicity1 = as.factor(star$tethnicity1)
-star$system1 = as.factor(star$system1)
-star$schoolid1 = as.factor(star$schoolid1)
 
-```
-
-
-```{r, include= FALSE}
-#Set colors for pretty pictures
-
-color2 = c("#FF6868", "#54B7FF")
-color3 = c("#FF6868", "#54B7FF", "97FF68")
-color4 = c("#FF6868", "#54B7FF", "97FF68", "#A168FF")
-color5 = c("#FF6868", "#54B7FF", "97FF68", "#A168FF", "#FFB768")
-color5 = c("#FF6868", "#54B7FF", "97FF68", "#A168FF", "#FFB768", "#FFE068")
- 
-
-#NOTE: colors will be assigned to factors in alphabetical order
 ```
 
 
@@ -120,6 +100,14 @@ box1
 #Methods & Analysis
 
 ##Descriptive Analysis
+
+## One-Way ANOVA Model
+
+###Model Results
+
+### Sensitivity Analysis
+
+#Results & Conclusions
 
 
 
