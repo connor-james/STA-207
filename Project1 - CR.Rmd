@@ -105,12 +105,14 @@ For our analysis, we selected the cell means ANOVA model to capture the effects 
 
 $$MathScore = \mu +T_2X_2 + T_3X_3 $$
 where:
+
 $X_2 = 1$ if the stduent is assigned to a small class and $0$ otherwise.
 $X_3 = 1$ if the stduent is assigned to a regular + aid class and $0$ otherwise.
 
-In this model, $\mu$ represnets the average first-grade math test-score for studnets enrolled in regular classes. $T_2$ represents the average change in score for studnets enrolled in 
+In this model, $\mu$ represnets the average first-grade math test-score for studnets enrolled in regular classes. Furthermore, $T_2$ represents the average change in score for studnets enrolled in small classes and $T_3$ represnets the average change in score for studnets enrolled in regualr+aid clases, both compared to the regular class treatment. 
 
 ###Model Results
+After 
 
 ### Sensitivity Analysis
 
