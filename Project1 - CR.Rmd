@@ -1,6 +1,6 @@
 ---
-title: "Effects of class sizes with classroom performacne"
-author: "Connor Rosenberg, NAME, NAME, NAME"
+title: "Capturing effects of class sizes with classroom performacne"
+author: "Connor Rosenberg"
 date: "1/10/2020"
 output: html_document
 ---
@@ -17,8 +17,7 @@ library("ggplot2")
 library("car")
 library("dplyr")
 library("plotly")
-library("sqldf")
-library("kableExtra")
+library("MASS")
 
 ```
 
@@ -29,9 +28,18 @@ data("STAR")
 
 star = data.frame( "gender" = STAR$gender, "ethnicity" = STAR$ethnicity, "star1" = STAR$star1, "math1" = STAR$math1)
 
+star_k = data.frame( "gender" = STAR$gender, "ethnicity" = STAR$ethnicity, "star.k" = STAR$stark, "math.k" = STAR$mathk)
+
 
 star = star[complete.cases(star),] #Eliminate all cases w/ NA
+
+star_k = star_k[complete.cases(star_k),]
 ```
+
+```{r}
+View(star_k)
+```
+
 
 ```{r, include=FALSE}
 #Check data & objects
@@ -42,38 +50,86 @@ star$gender = as.factor(star$gender)
 star$ethnicity = as.factor(star$ethnicity)
 star$star1 = as.factor(star$star1)
 
+
+
+```
+
+
+```{r, include= FALSE}
+#Set colors for pretty pictures
+
+color2 = c("#FF6868", "#54B7FF")
+color3 = c("#FF6868", "#54B7FF", "97FF68")
+color4 = c("#FF6868", "#54B7FF", "97FF68", "#A168FF")
+color5 = c("#FF6868", "#54B7FF", "97FF68", "#A168FF", "#FFB768")
+color5 = c("#FF6868", "#54B7FF", "97FF68", "#A168FF", "#FFB768", "#FFE068")
+ 
+
+#NOTE: colors will be assigned to factors in alphabetical order
 ```
 
 
 ```{r, include=FALSE}
-#Task 1 Summary Statistics:
+#Task 2 Summary Statistics:
 #NOTE: Please save all figures as objects to be called later in the report
 #NOTE: Use plotly package to make everything consistant https://plot.ly/r
 
 summary(star)
 
-#Boxplot of Gender
+#Piechart of Gender
 count = data.frame(table(star$gender))
 pieGender = plot_ly(count, labels = ~Var1, values = ~Freq, type = 'pie') %>%
   layout(title = "Gender of Participating Studnets")
 pieGender
+
+# Piechart of star1
+count2 = data.frame(table(star$star1))
+pieStar1 = plot_ly(count2, labels = ~Var1, values = ~Freq, type = 'pie') %>%
+  layout(title = "Class Type of 1st Grade")
+pieStar1
+
+# Bar Graph of star1
+
+counts3 <- table(star$star1)
+barplot(counts3, main="Distribution of 1st Grade Class Type", 
+   xlab="Class Type", col=c("darkblue","red","green"))
+
+#Plot of boxplot of math scores broken by class type
+box1 = plot_ly(star, y = ~math1, color = ~star1, type = "box")
+box1
+
+
+
+
+
+
+
+```
+From the pie chart of Gender, we can see that the numbers of males is 3414 and the number of females is 3184.
+
+
+
+
+```{r, include = FALSE}
+# Task 2
+
+table(star$star1)
+
+mean(subset(star, star1 == "small")[["math1"]])
+mean(subset(star, star1 == "regular")[["math1"]])
+mean(subset(star, star1 == "regular+aide")[["math1"]])
+
+var(subset(star, star1 == "small")[["math1"]])
+var(subset(star, star1 == "regular")[["math1"]])
+var(subset(star, star1 == "regular+aide")[["math1"]])
+
 ```
 
 
+
+
 ```{r, include=FALSE}
-
-a = sqldf("SELECT math1 FROM star WHERE star1 == 'small'")
-b = sqldf("SELECT math1 FROM star WHERE star1 == 'regular+aide'")
-c = sqldf("SELECT math1 FROM star WHERE star1 == 'regular'")
-
-hist2 <- plot_ly(alpha = 0.1) %>%
-  add_histogram(x = ~a$math1) %>%
-  add_histogram(x = ~b$math1) %>%
-  add_histogram(x = ~c$math1) %>%
-  layout(barmode = "overlay")
-
-hist2
-
+#Task 4
 ```
 
 
@@ -89,9 +145,12 @@ reg1 = lm(math1~star1, data = star)
 summary(reg1)
 anova1 = anova(reg1)
 anova1
+boxplot(star$math1~star$star1)
 
 plot(reg1,2)
-plot(reg1)
+plot(reg1, which = c(1,2))
+
+boxcox(reg1)
 
 
 #Plot of boxplot of math scores broken by class type
@@ -99,107 +158,34 @@ box1 = plot_ly(star, y = ~math1, color = ~star1, type = "box")
 box1
 ```
 
+
+```{r}
+# Task 7
+reg2 = lm(math.k~star.k, data = star_k)
+anova2 = anova(reg2)
+anova2
+
+```
+
 ```{r, include = FALSE}
 #Write the reprt below
 ```
 
-### Team ID:
 
 
 # Introduction
 
-### Background
+## Background
 
-### Questions of Interest
+##Questions of Interest
 
-# Methods & Analysis
+1. Is there a significant difference in the mean math scores in the 1st grade across different class types?
+2. Are the assumptions of the ANOVA model satisfied? To explore this question, we will use model diagnostics such as residual plots and a Levene test for equality of variances.
+3. Is there a significant difference in the mean math scores in kindergarten across different class types?
 
+#Methods & Analysis
 
-
-### Descriptive Analysis
-
-### One-Way ANOVA Model
-For our analysis, we selected the cell means ANOVA model to capture the effects of each of  differet class treatment. This model is most useful in our analysis becasure it represents the expected change in math test-score of a studnet from the standard regular class. The final model selected in this analysis is described below.
-
-$$MathScore = \mu +T_2X_2 + T_3X_3 $$
-where:
-
-$X_2 = 1$ if the stduent is assigned to a small class and $0$ otherwise.
-$X_3 = 1$ if the stduent is assigned to a regular + aid class and $0$ otherwise.
-
-In this model, $\mu$ represnets the average first-grade math test-score for studnets enrolled in regular classes. Furthermore, $T_2$ represents the average change in score for studnets enrolled in small classes and $T_3$ represnets the average change in score for studnets enrolled in regualr+aid clases, both compared to the regular class treatment. 
-
-Before fitting the model described above, it is imporatnt to examine the model assumptions.
-
-1) Normailty
-
-Examining the histogram of math scores across each of the three different classroom treatments, we can see that the scores of each treatment appear to follow a normal-like distribution. We can also note that each treatment distribution has slightly heavy left-tails; however, they do not deviate too much from our model assumptions and therefore, we may continue without transformating our data to fit this assumption.  
-```{r, fig.width=8, fig.height=6, echo = FALSE}
-hist2
-```
-
-2) Independence
-
-It is not reasonable to assume a strict independce of our samples through this study. Studnets may study together, teachers may share materials, or parents may seek out tutoring for thier child. However, this study represnets the most controlled and rhobust method we could possible obtain to examine the effects of class size of math test scores of first graders. Paired with the large sample size, while these smaples are not strictly independnet we can consider them practically indepenent since the study represents the most controlled enviorment we could possible obtain.
-
-3) Equality of Variance
-
-From the histograms pictured above, it does appear that the distribution of first-grade test scores across the three treatments have the same varaince. And after specifying an alpha of $.o5$ The lavene test for euality of variances did not return significnat evidnce that the variances between grops was significantly different. Therefore, we may assume equaltiy of variances between treatment groups. 
-
-```{r, echo=FALSE}
-leveneTest(math1~star1, data = star) #Equal Variacnes
-```
-
-With all three of our model assumptions verrifeid, we can continue to fit our ANOVA model.
-
-#### Model Results
-
-After fitting the cell means model described above, we found significnat evidence to suggust that at least one of the classroom treatments exhibited a different score distribtion compared to that of regular class size.
-
-```{r, echo=FALSE}
-anova1
-```
-
-Both the Regular+Aide & Small class sizes returned an increase in average math scores compared to the regualr class treatment group. The average score for students in regular classes was 525.28. Students enrolled in Regular + Aide classes perfomred on average 4.35 scaled points higher than regular class students. Similarly, Students enrolled in Regular + Aide classes perfomred on average 13.40 scaled points higher than regular class students.
-
-```{r,fig.width=3, fig.height=2, echo = FALSE}
-effect = (data.frame(reg1$coefficients))
-effect1 = data.frame( "Class Size" = c("Regular", "Regular + Aide","Small"), "Average Math Score" = c(525.28,529.63,538.68), "Change from Regular" = c("",4.35,13.40), "Significant" = c("","YES", "YES"))
-
-
-kable(effect1) %>% kable_styling(bootstrap_options = "striped", full_width = F)
-```
-
-#### Model Diagnostic
-
-Before validating out model, we must return to our assumptions and ensure that they were not violated.
-
-1) Normailty
-
-From the normal Q-Q plot below, we can observe that our specified model follows the expected Q-Q quite well. While there are some minor deviations at the tails, which we observed earlier in the the Histogram, the overall trend of the data demonstrates a largly normal distribution. Therefore, we can satsify the normality assumption. 
-
-```{r, echo = FALSE}
-plot(reg1, which = c(2))
-```
-
-2) Independence
-
-From the Residual vs Fitted plot below, it is clear that our data is independnet and randomly distributed about zero. Therefore, we can satisfy our assumption of independnce. 
-
-```{r, echo=FALSE}
-plot(reg1, which = c(1))
-```
-
-3) Equality of Variance
-
-Finally, the Residual vs Fitted plot above shows that the distribution of residuals in each of the three treatments is indistinguishable. Paired with our earlier test for the equality of variance, we can satsify this assumption.
-
-With all three model assumptions supported by residuals, we move forward and validate this model. That is to say, this model is behaving the way we expect it to and is therefore a useful and informative model.
-
-
-### Sensitivity Analysis
-
-# Conclusions
+##Descriptive Analysis
 
 
 
