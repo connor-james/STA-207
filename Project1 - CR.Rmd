@@ -75,7 +75,6 @@ reg1 = lm(math1~star1, data = star)
 summary(reg1)
 anova1 = anova(reg1)
 anova1
-boxplot(star$math1~star$star1)
 
 plot(reg1,2)
 plot(reg1)
@@ -102,6 +101,14 @@ box1
 ##Descriptive Analysis
 
 ## One-Way ANOVA Model
+For our analysis, we selected the cell means ANOVA model to capture the effects of each of  differet class treatment. This model is most useful in our analysis becasure it represents the expected change in math test-score of a studnet from the standard regular class. The final model selected in this analysis is described below.
+
+$$MathScore = \mu +T_2X_2 + T_3X_3 $$
+where:
+$X_2 = 1$ if the stduent is assigned to a small class and $0$ otherwise.
+$X_3 = 1$ if the stduent is assigned to a regular + aid class and $0$ otherwise.
+
+In this model, $\mu$ represnets the average first-grade math test-score for studnets enrolled in regular classes. $T_2$ represents the average change in score for studnets enrolled in 
 
 ###Model Results
 
