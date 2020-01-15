@@ -18,7 +18,7 @@ library("car")
 library("dplyr")
 library("plotly")
 library("MASS")
-
+library("knitr")
 ```
 
 ```{r, include=FALSE}
@@ -126,6 +126,41 @@ var(subset(star, star1 == "regular+aide")[["math1"]])
 ```
 
 
+```{r, include = FALSE}
+boxSchool = STAR %>% 
+  na.omit() %>% 
+  dplyr::select(school1, math1) %>% 
+  plot_ly(x = ~school1, 
+          y = ~math1,
+          color = ~school1,
+          type = "box") %>% 
+  layout(title = "Total Math Scaled Score in 1st Grade for Differnt types of School") %>% 
+  layout(yaxis = list(title = "Total Math Scaled Score in 1st Grade"), 
+         xaxis = list(title = "School Type"))
+boxSchool
+
+
+lineMath = STAR %>% 
+  dplyr::select(stark, mathk, star1, math1, star2, math2, star3, math3) %>% 
+  filter(stark == star1 & stark == star2 & stark == star3) %>%
+  #na.omit() %>% 
+  group_by(class_type = stark) %>%
+  summarise(kindergarten = mean(mathk, na.rm = TRUE),
+            grade1 = mean(math1, na.rm = TRUE),
+            grade2 = mean(math2, na.rm = TRUE),
+            grade3 = mean(math3, na.rm = TRUE)) %>% 
+  pivot_longer(-class_type, names_to = 'math', values_to = 'grade') %>% 
+  plot_ly(y = ~grade, 
+          x = ~factor(math, level = c('kindergarten','grade1','grade2','grade3')),
+          color = ~class_type,
+          type = "scatter",
+          mode = "lines") %>% 
+  layout(title = "Mean of Total Math Scaled Score") %>% 
+  layout(xaxis = list(title = 'Grade'),
+         yaxis = list(title = 'Total Math Scaled Score'))
+
+lineMath
+```
 
 
 ```{r, include=FALSE}
@@ -164,6 +199,50 @@ box1
 reg2 = lm(math.k~star.k, data = star_k)
 anova2 = anova(reg2)
 anova2
+
+```
+
+
+```{r, include = FALSE}
+# test
+alpha = 0.05
+r = 3
+nt = dim(star)[1]
+
+## F-test
+fit1 = aov(math1~star1, data = star)
+summary(fit1)
+
+
+
+ni = as.numeric(summary(star$star1))
+mstr = 97444
+mse = sum(fit1$residuals^2)/(nt-r)
+f = mstr/mse
+f_cr = qf(1-alpha, r-1, nt-r)
+f > f_cr
+
+## family-wise ci
+y_bar = as.numeric(tapply(star$math1, star$star1, mean))
+y_bar
+
+d1 = y_bar[1] - y_bar[2]
+d2 = y_bar[2] - y_bar[3]
+d3 = y_bar[3] - y_bar[1]
+
+s_d1 = sqrt(mse*(1/ni[1]+1/ni[2]))
+s_d2 = sqrt(mse*(1/ni[2]+1/ni[3]))
+s_d3 = sqrt(mse*(1/ni[3]+1/ni[1]))
+
+
+g = 3
+B_ = qt(1-alpha/(2*g), nt-r)                         
+T_ = 1/sqrt(2) * qtukey(1-alpha, r, nt-r)  # smallest, use tukey
+S_ = sqrt((r-1) * qf(1-alpha, r, nt-r))
+
+ci1 = c(d1-s_d1*T_, d1+s_d1*T_)
+ci2 = c(d2-s_d2*T_, d2+s_d2*T_)
+ci3 = c(d3-s_d3*T_, d3+s_d3*T_)
 
 ```
 
