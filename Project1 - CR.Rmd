@@ -1,6 +1,6 @@
 ---
-title: "Capturing effects of class sizes with classroom performacne"
-author: "Connor Rosenberg"
+title: "Effects of class sizes with classroom performacne"
+author: "Connor Rosenberg, NAME, NAME, NAME"
 date: "1/10/2020"
 output: html_document
 ---
@@ -103,20 +103,22 @@ box1
 #Write the reprt below
 ```
 
+### Team ID:
+
 
 # Introduction
 
-## Background
+### Background
 
-## Questions of Interest
+### Questions of Interest
 
 # Methods & Analysis
 
 
 
-## Descriptive Analysis
+### Descriptive Analysis
 
-## One-Way ANOVA Model
+### One-Way ANOVA Model
 For our analysis, we selected the cell means ANOVA model to capture the effects of each of  differet class treatment. This model is most useful in our analysis becasure it represents the expected change in math test-score of a studnet from the standard regular class. The final model selected in this analysis is described below.
 
 $$MathScore = \mu +T_2X_2 + T_3X_3 $$
@@ -150,7 +152,7 @@ leveneTest(math1~star1, data = star) #Equal Variacnes
 
 With all three of our model assumptions verrifeid, we can continue to fit our ANOVA model.
 
-### Model Results
+#### Model Results
 
 After fitting the cell means model described above, we found significnat evidence to suggust that at least one of the classroom treatments exhibited a different score distribtion compared to that of regular class size.
 
@@ -167,13 +169,37 @@ effect1 = data.frame( "Class Size" = c("Regular", "Regular + Aide","Small"), "Av
 
 kable(effect1) %>% kable_styling(bootstrap_options = "striped", full_width = F)
 ```
-### Model Diagnostic
 
+#### Model Diagnostic
+
+Before validating out model, we must return to our assumptions and ensure that they were not violated.
+
+1) Normailty
+
+From the normal Q-Q plot below, we can observe that our specified model follows the expected Q-Q quite well. While there are some minor deviations at the tails, which we observed earlier in the the Histogram, the overall trend of the data demonstrates a largly normal distribution. Therefore, we can satsify the normality assumption. 
+
+```{r, echo = FALSE}
+plot(reg1, which = c(2))
+```
+
+2) Independence
+
+From the Residual vs Fitted plot below, it is clear that our data is independnet and randomly distributed about zero. Therefore, we can satisfy our assumption of independnce. 
+
+```{r, echo=FALSE}
+plot(reg1, which = c(1))
+```
+
+3) Equality of Variance
+
+Finally, the Residual vs Fitted plot above shows that the distribution of residuals in each of the three treatments is indistinguishable. Paired with our earlier test for the equality of variance, we can satsify this assumption.
+
+With all three model assumptions supported by residuals, we move forward and validate this model. That is to say, this model is behaving the way we expect it to and is therefore a useful and informative model.
 
 
 ### Sensitivity Analysis
 
-#Results & Conclusions
+# Conclusions
 
 
 
