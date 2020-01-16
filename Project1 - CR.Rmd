@@ -19,6 +19,7 @@ library("dplyr")
 library("plotly")
 library("MASS")
 library("knitr")
+library("tidyr")
 ```
 
 ```{r, include=FALSE}
@@ -127,9 +128,10 @@ var(subset(star, star1 == "regular+aide")[["math1"]])
 
 
 ```{r, include = FALSE}
+## School type
 boxSchool = STAR %>% 
-  na.omit() %>% 
   dplyr::select(school1, math1) %>% 
+  na.omit() %>% 
   plot_ly(x = ~school1, 
           y = ~math1,
           color = ~school1,
@@ -139,7 +141,22 @@ boxSchool = STAR %>%
          xaxis = list(title = "School Type"))
 boxSchool
 
+barSchool = STAR %>% 
+  dplyr::select(school1, math1, star1) %>% 
+  na.omit() %>%
+  group_by(school1, star1) %>% 
+  summarise(math = median(math1)) %>% 
+  plot_ly(x = ~school1, 
+          y = ~math,
+          color = ~star1,
+          type = "bar") %>% 
+  layout(title = "Median of Total Math Scaled Score in 1st Grade") %>% 
+  layout(yaxis = list(title = "Total Math Scaled Score in 1st Grade"), 
+         xaxis = list(title = "School Type"))
+barSchool
 
+
+## grade
 lineMath = STAR %>% 
   dplyr::select(stark, mathk, star1, math1, star2, math2, star3, math3) %>% 
   filter(stark == star1 & stark == star2 & stark == star3) %>%
@@ -256,7 +273,7 @@ ci3 = c(d3-s_d3*T_, d3+s_d3*T_)
 
 ## Background
 
-##Questions of Interest
+## Questions of Interest
 
 1. Is there a significant difference in the mean math scores in the 1st grade across different class types?
 2. Are the assumptions of the ANOVA model satisfied? To explore this question, we will use model diagnostics such as residual plots and a Levene test for equality of variances.
@@ -264,7 +281,15 @@ ci3 = c(d3-s_d3*T_, d3+s_d3*T_)
 
 #Methods & Analysis
 
-##Descriptive Analysis
+## Descriptive Analysis
 
+### School Type
+The project include four types of schools to assess the effects of class size in differnet school locations. They are inner-city, suburban, urban, and rural schools. Inner-city and surburban schools were located in metropolitan areas, and urban or rural schools were located in non-metropolitan areas. 
 
+According to the box plot, students in suburban and rural schools
+performed better on the total math scaled score in 1st grade. Besides, the bar plot shows that in all types of schools, students in small classes performed slightly better than students in regular classes or regular classes with a full-time teacher aide. However, the effect of school type is not very significant in this plot, and further analysis might be needed.
 
+### Class type
+Considering that some schools might drop out of the project, or the class type might be changed if schools gain or lose students, here I only select students that had full records of math scaled scores, and remained in the same type of class from kindergarten to the 3rd grade.
+
+According to the line plot, the performance of students in regular classes and the performance of students in regular classes with a full-time tearcher aide are not very different. However, the students in small classes performed better on the total math scaled score from kindergarten to the 3rd grade.
