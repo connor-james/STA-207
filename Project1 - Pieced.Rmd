@@ -266,6 +266,10 @@ ci3 = capture.output(cat('[',d3-s_d3*S_,',',d3+s_d3*S_, ']'))
 
 ### Background
 
+The Student/Teacher Achievement Ratio (STAR) was a four-year longitudinal class-size study funded by the Tennessee General Assembly and conducted by the State Department of Education. Over 7,000 students in 79 schools were randomly assigned into one of three interventions: small class (13 to 17 students per teacher), regular class (22 to 25 students per teacher), and regular-with-aide class (22 to 25 students with a full-time teacher's aide). Classroom teachers were also randomly assigned to the classes they would teach. The interventions were initiated as the students entered school in kindergarten and continued through third grade.    
+
+
+
 ***
 
 ### Questions of Interest
