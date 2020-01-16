@@ -325,14 +325,15 @@ colnames(multi) = c('Procedure', 'Multiplier')
 knitr::kable(multi) %>%  kable_styling(full_width = F)
 ```
 
+According the Confidence Intervals, zero is not contained in all the C.I.s. Therefore, at the family-wise significance level 0.05, we would reject all the null hypotheses. 
+
 ```{r, echo = FALSE}
 di = c("$\\mu_1 - \\mu_2$","$\\mu_2 - \\mu_3$", "$\\mu_1 - \\mu_3$")
 d = c(d1,d2,d3)
 ci = c(ci1, ci2, ci3)
 cit = cbind(di,d,ci)
-colnames(cit) = c('$D_{ij}$', '$\\hat D_i$', 'CI')
+colnames(cit) = c('$D_{ij}$', '$\\hat D_i$', '$CI$')
 knitr::kable(cit)  %>%  kable_styling(full_width = F)
 ```
-
 
 
