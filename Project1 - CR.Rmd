@@ -21,6 +21,7 @@ library("MASS")
 library("knitr")
 library("kableExtra")
 library("tidyr")
+library("table1")
 ```
 
 ```{r, include=FALSE}
@@ -127,6 +128,9 @@ var(subset(star, star1 == "regular+aide")[["math1"]])
 
 ```
 
+```{r}
+table1(~ gender + ethnicity + school1 + math1 | star1, data = STAR)
+```
 
 ```{r, include = FALSE}
 STAR %>% 
