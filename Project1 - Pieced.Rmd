@@ -253,12 +253,12 @@ ci3 = capture.output(cat('[',d3-s_d3*S_,',',d3+s_d3*S_, ']'))
 
 ***
 
-### Team ID:
+### Team ID: Team 6
 
-#### NAME
-#### NAME
-#### NAME
-#### NAME
+#### NAME: Connor Rosenberg
+#### NAME: Nassim Ali-Chaouche
+#### NAME: Rongkui Han
+#### NAME: Yuqing Yang
 
 ***
 
@@ -266,8 +266,23 @@ ci3 = capture.output(cat('[',d3-s_d3*S_,',',d3+s_d3*S_, ']'))
 
 ### Background
 
-The Student/Teacher Achievement Ratio (STAR) was a four-year longitudinal class-size study funded by the Tennessee General Assembly and conducted by the State Department of Education. Over 7,000 students in 79 schools were randomly assigned into one of three interventions: small class (13 to 17 students per teacher), regular class (22 to 25 students per teacher), and regular-with-aide class (22 to 25 students with a full-time teacher's aide). Classroom teachers were also randomly assigned to the classes they would teach. The interventions were initiated as the students entered school in kindergarten and continued through third grade.    
+The Student/Teacher Achievement Ratio (STAR) was a four-year longitudinal class-size study funded by the Tennessee General Assembly and conducted by the State Department of Education. Over 7,000 students from kindergarten to 3rd grade in 79 schools were randomly assigned into one of three interventions: small class (13 to 17 students per teacher), regular class (22 to 25 students per teacher), and regular-with-aide class (22 to 25 students with a full-time teacher's aide). Classroom teachers were also randomly assigned to the classes they would teach. The interventions were initiated as the students entered school in kindergarten and continued through third grade.    
 
+The STAR experiment was designed by a group of researchers including Helen Pate-Bain, the driving force behind Project STAR, other academics, and members of the Tennessee Department of Education. Some of its key features are: 
+
+1. *All Tennessee schools with K-3 classes were invited to participate.* Giving every school a chance to join the study helped ensure a diverse sample as well as rule out the possibility that class-size effects could be attributed to selection bias.   
+
+2. *Each school included in the study had to have a large enough student body to form as least one of each of the three class types.* The within-school design provided built-in control for differences among schools in terms of resources, leadership, and facilities.   
+
+3. *Schools from inner-city, urban, suburban and rural locations were included in the experiment.* This feature guaranteed that samples would include children from various ethnic backgrounds and income levels.   
+
+4. *Students and teachers were randomly assigned to their class type.*    
+
+5. *Investigators followed the standard procedures for confidentiality in human subjects' research.*   
+
+6. *No children were to receive fewer services than normal because of the experiment.*    
+
+7. *Student achievement was to be tracked by standarized tests, which were carefully monitored.*     
 
 
 ***
