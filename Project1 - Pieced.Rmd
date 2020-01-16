@@ -1,5 +1,5 @@
 ---
-title: "Effects of Class Size on Math Performacne in Kentucky"
+title: "Effects of Class Size on Math Performance in Tennessee"
 date: "1/10/2020"
 output: html_document
 ---
@@ -256,9 +256,10 @@ ci3 = capture.output(cat('[',d3-s_d3*S_,',',d3+s_d3*S_, ']'))
 ### Team ID: Team 6
 
 #### NAME: Connor Rosenberg
-#### NAME: Nassim Ali-Chaouche
 #### NAME: Rongkui Han
 #### NAME: Yuqing Yang
+#### NAME: Nassim Ali-Chaouche
+
 
 ***
 
@@ -292,8 +293,7 @@ For our analysis, we will consider the following qustions.
 
 1. Is there a significant difference in the mean math scores in the 1st grade across different class types?
 2. Are the assumptions of the ANOVA model satisfied? To explore this question, we will use model diagnostics such as residual plots and a Levene test for equality of variances.
-3. Is there a significant difference in the mean math scores in kindergarten across different class types?
-
+3. Can we conclude that class sizes effect the scaled math scores of first grade students?
 
 ***
 
@@ -328,13 +328,20 @@ Considering that some schools might drop out of the project, or the class type m
 
 According to the line plot, the performance of students in regular classes and the performance of students in regular classes with a full-time tearcher aide are not very different. However, the students in small classes performed better on the total math scaled score from kindergarten to the 3rd grade.
 
+```{r, echo=FALSE, warning=FALSE}
+div(lineMath %>% 
+      layout(autosize = F, width = 800, height = 400),
+    align = "center")
+```
+
+
 
 ### One-Way ANOVA Model
 For our analysis, we will use a variation of the factor effects model to capture the effect of the differet class treatments. This model is most useful in our analysis becasure it represents the expected change in math score compared to a studnet enrolled in the standard regular class treatment. As showed above, the the study effectivly randomized many of the different demographic features of particiapnts. This randomization allows us to use this simplified model to generalize the impact of class sizes on test scores across all demogrphics. Moreover, since our primary question examines the effect of class size on math scores, defining the model in this way allows us to examine the effect of each treatment compared to the regular class treatment. 
 
 The  The final model selected in this analysis is described below.
 
-$$MathScore = \mu +T_2X_2 + T_3X_3 $$
+$$MathScore = \mu_{i.} +T_2X_2 + T_3X_3 + \epsilon_{i,j} $$
 where:
 
 $X_2 = 1$ if the stduent is assigned to a small class and $0$ otherwise.
@@ -413,9 +420,14 @@ plot(reg1, which = c(1))
 
 3) Equality of Variance
 
-Finally, the Residual vs Fitted plot above shows that the distribution of residuals in each of the three treatments is indistinguishable. Paired with our earlier test for the equality of variance, we can satsify this assumption.
+Finally, the histogram of residuals below show that thier distribution in each of the three treatments is indistinguishable. Paired with our earlier test for the equality of variance, we can satsify this assumption.
 
 With all three model assumptions supported by residuals, we move forward and validate this model. That is to say, this model is behaving the way we expect it to and is therefore a useful and informative model.
+
+```{r , echo=FALSE, fig.align="center"}
+hist(reg1$residuals, main = "Historgram of Residuals")
+```
+
 
 ***
 
@@ -451,6 +463,7 @@ cit = cbind(di,d,ci)
 colnames(cit) = c('$D_{ij}$', '$\\hat D_i$', '$CI$')
 knitr::kable(cit)  %>%  kable_styling(full_width = F)
 ```
+
 Our ANOVA model and confidence intervals all demonstrated significnat evidnece that the scaled math scores for first grade studnets in small and regular + aide classes were both significnalty higher than the scaled math scored for studnts enrolled in regular classes. 
 
 ***
