@@ -340,7 +340,7 @@ where:
 $X_2 = 1$ if the stduent is assigned to a small class and $0$ otherwise.
 $X_3 = 1$ if the stduent is assigned to a regular + aid class and $0$ otherwise.
 
-In this model, $\mu$ represnets the average first-grade math test-score for studnets enrolled in regular classes. Furthermore, $T_2$ represents the average change in score for studnets enrolled in small classes and $T_3$ represnets the average change in score for studnets enrolled in regualr+aid clases, both compared to the regular class treatment. 
+In this model, $\mu$ represents the average first-grade math test-score for studnets enrolled in regular classes. Furthermore, $T_2$ represents the average change in score for studnets enrolled in small classes and $T_3$ represnets the average change in score for studnets enrolled in regualr+aid clases, both compared to the regular class treatment. 
 
 Before fitting the model described above, it is imporatnt to examine the model assumptions.
 
@@ -355,11 +355,11 @@ div(hist2 %>%
 
 2) Independence
 
-It is not reasonable to assume a strict independce of our samples through this study. Studnets may study together, teachers may share materials, or parents may seek out tutoring for thier child. However, this study represnets the most controlled and rhobust method we could possible obtain to examine the effects of class size of math test scores of first graders. Paired with the large sample size, while these smaples are not strictly independnet we can consider them practically indepenent since the study represents the most controlled enviorment we could possible obtain.
+It is not reasonable to assume a strict independence of our samples through this study. Studnets may study together, teachers may share materials, or parents may seek out tutoring for thier child. However, this study represents the most controlled and robust method we could possible obtain to examine the effects of class size of math test scores of first graders. Paired with the large sample size, while these smaples are not strictly independent we can consider them practically independent since the study represents the most controlled enviorment we could possible obtain.
 
 3) Equality of Variance
 
-From the histograms pictured above, it does appear that the distribution of first-grade test scores across the three treatments have the same varaince. And after specifying an alpha of $.o5$ The lavene test for euality of variances did not return significnat evidnce that the variances between grops was significantly different. Therefore, we may assume equaltiy of variances between treatment groups. 
+From the histograms pictured above, it does appear that the distribution of first-grade test scores across the three treatments have the same varaince. And after specifying an alpha of $.05$ The lavene test for euality of variances did not return significnat evidnce that the variances between grops was significantly different. Therefore, we may assume equaltiy of variances between treatment groups. 
 
 ```{r, echo=FALSE}
 leveneTest(math1~star1, data = star) #Equal Variacnes
@@ -405,7 +405,7 @@ a = plot(reg1, which = c(2))
 
 2) Independence
 
-From the Residual vs Fitted plot below, it is clear that our data is independnet and randomly distributed about zero. Therefore, we can satisfy our assumption of independnce. 
+From the Residual vs Fitted plot below, it is clear that our data is independnet and randomly distributed about zero. Therefore, we can satisfy our assumption of independence. 
 
 ```{r, echo=FALSE, fig.align="center"}
 plot(reg1, which = c(1))
