@@ -259,7 +259,7 @@ ci3 = capture.output(cat('[',d3-s_d3*S_,',',d3+s_d3*S_, ']'))
 #### NAME: Rongkui Han
 #### NAME: Yuqing Yang
 #### NAME: Nassim Ali-Chaouche
-
+#### GitHub repo: https://github.com/connor-james/STA-207.git
 
 ***
 
