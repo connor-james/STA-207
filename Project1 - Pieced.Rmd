@@ -397,7 +397,9 @@ It is not reasonable to assume a strict independence of our samples through this
 From the histograms pictured above, it does appear that the distribution of first-grade test scores across the three treatments have the same variance. And after specifying an alpha of $.05$ The lavene test for equality of variances did not return significant evidence that the variances between groups was significantly different. Therefore, we may assume equality of variances between treatment groups. 
 
 ```{r, echo=FALSE}
-leveneTest(math1~star1, data = star) #Equal Variacnes
+a = leveneTest(math1~star1, data = star) #Equal Variacnes
+kable(a) %>% kable_styling(bootstrap_options = "striped", full_width = F)
+
 ```
 
 With all three of our model assumptions verified, we can continue to fit our ANOVA model.
@@ -407,7 +409,7 @@ With all three of our model assumptions verified, we can continue to fit our ANO
 After fitting the cell means model described above, we found significant evidence to suggest that at least one of the classroom treatments exhibited a different score distribution compared to that of regular class size.
 
 ```{r, echo=FALSE}
-anova1
+kable(anova1) %>% kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
 Both the Regular+Aide & Small class sizes returned an increase in average math scores compared to the regualr class treatment group. The average score for students in regular classes was 525.28. Students enrolled in Regular + Aide classes perfomred on average 4.35 scaled points higher than regular class students. Similarly, Students enrolled in Regular + Aide classes perfomred on average 13.40 scaled points higher than regular class students.
