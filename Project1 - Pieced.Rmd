@@ -349,6 +349,10 @@ $X_3 = 1$ if the stduent is assigned to a regular + aid class and $0$ otherwise.
 
 In this model, $\mu$ represents the average first-grade math test-score for studnets enrolled in regular classes. Furthermore, $T_2$ represents the average change in score for studnets enrolled in small classes and $T_3$ represnets the average change in score for studnets enrolled in regualr+aid clases, both compared to the regular class treatment. 
 
+To facilitate pair-wise analysis, we used $\mu_i$ to denote the group mean for each class type, where:     
+$\mu_i = \mu$ for $i = 1$;    
+$\mu_i = \mu + T_iX_i$ for $i = 2, 3$
+
 Before fitting the model described above, it is imporatnt to examine the model assumptions.
 
 1) Normailty
