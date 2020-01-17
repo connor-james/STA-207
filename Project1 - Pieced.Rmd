@@ -463,13 +463,13 @@ hist(reg1$residuals, main = "Histogram of Residuals")
 
 Since there is no violation for ANOVA model assumptions, an F-test was used to test whether there is a difference in the math scaled score in 1st grade across students in different type. The hypothesis was shown as below.
 
-$H_0: \mu1 = \mu2 = \mu3$ v.s $H_a: not\  all\  \mu_i's\  are\ equal$ 
+$$H_0: \mu1 = \mu2 = \mu3 \ V.S. \ H_a: not\  all\  \mu_i's\  are\ equal$$ 
 
 Since $F^* = \frac{MSTR}{MSE} = 53.26 > F(1-\alpha; r, n_T-r) = 2.997093$, we reject the null hypothesis at level of 0.05. 
 
 To further investigate the difference among the class types, multiple comparisons were used. The hypothesis was shown as below.
 
-$H_0: D_{ij} = \mu_i-\mu_j, 1\leq i < j \leq3$
+$$H_0: D_{ij} = \mu_i-\mu_j, 1\leq i < j \leq3$$
 
 The multipliers of Bonferroni's procedure, Tukey's procedure, and Scheffé's procedure were shown in the table below. It is shown that the Scheffé's multiplier is the smallest. So the Scheffé's procedure was used to contrust the confidence intervals. 
 
