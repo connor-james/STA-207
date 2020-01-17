@@ -291,9 +291,11 @@ The STAR experiment was designed by a group of researchers including Helen Pate-
 ### Questions of Interest
 For our analysis, we will consider the following qustions.
 
-1. Is there a significant difference in the mean math scores in the 1st grade across different class types?
+1. Is there a significant difference in the mean math scores in the 1st grade across different class types? To explore this question, we will use an F-test for the equality of means.
 2. Are the assumptions of the ANOVA model satisfied? To explore this question, we will use model diagnostics such as residual plots and a Levene test for equality of variances.
-3. Can we conclude that class sizes effect the scaled math scores of first grade students?
+3. Can we conclude that class sizes effect the scaled math scores of first grade students? To explore this question, we will construct pair-wise confidence intervals.
+
+These questions are of important to education policymakers. The answers to these questions will provide insight into the best learning environents for students by displaying how average scores are associated with different class types. 
 
 ***
 
@@ -303,6 +305,18 @@ For our analysis, we will consider the following qustions.
 ### Descriptive Analysis
 
 There are 11,598 rows and 47 columns in the STAR dataset. Each row represents a student that participated in the experimental phase for at least one year. Each column represents information including demographic variables. This variables inlcude school type, class type, and scores from different subject tests. For our analysis, we will primarily focus on the type of class and the scaled math score of first graders. 
+
+The distribution of the number of 1st grade students in each class type is displayed in the pie chart below:
+
+```{r, echo=FALSE, warning=FALSE}
+count2 = data.frame(table(star$star1))
+pieStar1 = plot_ly(count2, labels = ~Var1, values = ~Freq, type = 'pie') %>%
+  layout(title = "Class Type of 1st Grade")
+pieStar1
+```
+
+We observe that 38% of students are enrolled in a regular class, 33.7% of students are enrolled in a regular+aide class, and 28.3% of students are enrolled in a small class.
+
 
 #### School Type
 The project include four types of schools to assess the effects of class size in differnet school locations. They are inner-city, suburban, urban, and rural schools. Inner-city and surburban schools were located in metropolitan areas, and urban or rural schools were located in non-metropolitan areas. 
@@ -333,6 +347,8 @@ div(lineMath %>%
       layout(autosize = F, width = 800, height = 400),
     align = "center")
 ```
+
+
 
 
 
