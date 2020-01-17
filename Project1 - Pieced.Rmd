@@ -304,7 +304,7 @@ These questions are of important to education policymakers. The answers to these
 
 ### Descriptive Analysis
 
-There are 11,598 rows and 47 columns in the STAR dataset. Each row represents a student that participated in the experimental phase for at least one year. Each column represents information including demographic variables. This variables inlcude school type, class type, and scores from different subject tests. For our analysis, we will primarily focus on the type of class and the scaled math score of first graders. 
+There are 11,598 rows and 47 columns in the STAR data set. Each row represents a student that participated in the experimental phase for at least one year. Each column represents information including demographic variables. This variables include school type, class type, and scores from different subject tests. For our analysis, we will primarily focus on the type of class and the scaled math score of first graders. 
 
 The distribution of the number of 1st grade students in each class type is displayed in the pie chart below:
 
@@ -319,7 +319,7 @@ We observe that 38% of students are enrolled in a regular class, 33.7% of studen
 
 
 #### School Type
-The project include four types of schools to assess the effects of class size in differnet school locations. They are inner-city, suburban, urban, and rural schools. Inner-city and surburban schools were located in metropolitan areas, and urban or rural schools were located in non-metropolitan areas. 
+The project include four types of schools to assess the effects of class size in different school locations. They are inner-city, suburban, urban, and rural schools. Inner-city and suburban schools were located in metropolitan areas, and urban or rural schools were located in non-metropolitan areas. 
 
 According to the box plot, students in suburban and rural schools
 performed better on the total math scaled score in 1st grade. Besides, the bar plot shows that in all types of schools, students in small classes performed slightly better than students in regular classes or regular classes with a full-time teacher aide. However, the effect of school type is not very significant in this plot, and further analysis might be needed.
@@ -340,7 +340,7 @@ div(barSchool %>%
 
 Considering that some schools might drop out of the project, or the class type might be changed if schools gain or lose students, here I only select students that had full records of math scaled scores, and remained in the same type of class from kindergarten to the 3rd grade.
 
-According to the line plot, the performance of students in regular classes and the performance of students in regular classes with a full-time tearcher aide are not very different. However, the students in small classes performed better on the total math scaled score from kindergarten to the 3rd grade.
+According to the line plot, the performance of students in regular classes and the performance of students in regular classes with a full-time teacher aide are not very different. However, the students in small classes performed better on the total math scaled score from kindergarten to the 3rd grade.
 
 ```{r, echo=FALSE, warning=FALSE}
 div(lineMath %>% 
@@ -353,23 +353,28 @@ div(lineMath %>%
 
 
 ### One-Way ANOVA Model
-For our analysis, we will use a variation of the factor effects model to capture the effect of the differet class treatments. This model is most useful in our analysis becasure it represents the expected change in math score compared to a studnet enrolled in the standard regular class treatment. As showed above, the the study effectivly randomized many of the different demographic features of particiapnts. This randomization allows us to use this simplified model to generalize the impact of class sizes on test scores across all demogrphics. Moreover, since our primary question examines the effect of class size on math scores, defining the model in this way allows us to examine the effect of each treatment compared to the regular class treatment. 
+For our analysis, we will use a variation of the factor effects model to capture the effect of the different class treatments. This model is most useful in our analysis because it represents the expected change in math score compared to a student enrolled in the standard regular class treatment. As showed above, the the study effectively randomized many of the different demographic features of participants. This randomization allows us to use this simplified model to generalize the impact of class sizes on test scores across all demographics. Moreover, since our primary question examines the effect of class size on math scores, defining the model in this way allows us to examine the effect of each treatment compared to the regular class treatment. 
 
 The  The final model selected in this analysis is described below.
 
-$$MathScore = \mu_{i.} +T_2X_2 + T_3X_3 + \epsilon_{i,j} $$
+$$MathScore = \mu +T_2X_2 + T_3X_3 + \epsilon_{i,j} $$
+
 where:
 
 $X_2 = 1$ if the stduent is assigned to a small class and $0$ otherwise.
 $X_3 = 1$ if the stduent is assigned to a regular + aid class and $0$ otherwise.
 
-In this model, $\mu$ represnets the average first-grade math test-score for studnets enrolled in regular classes. Furthermore, $T_2$ represents the average change in score for studnets enrolled in small classes and $T_3$ represnets the average change in score for studnets enrolled in regualr+aid clases, both compared to the regular class treatment. 
+In this model, $\mu$ represents the average first-grade math test-score for studnets enrolled in regular classes. Furthermore, $T_2$ represents the average change in score for studnets enrolled in small classes and $T_3$ represnets the average change in score for studnets enrolled in regualr+aid clases, both compared to the regular class treatment. 
+
+To facilitate pair-wise analysis, we used $\mu_i$ to denote the group mean for each class type, where:     
+$\mu_i = \mu$ for $i = 1$;    
+$\mu_i = \mu + T_iX_i$ for $i = 2, 3$
 
 Before fitting the model described above, it is imporatnt to examine the model assumptions.
 
 1) Normailty
 
-Examining the histogram of math scores across each of the three different classroom treatments, we can see that the scores of each treatment appear to follow a normal-like distribution. We can also note that each treatment distribution has slightly heavy left-tails; however, they do not deviate too much from our model assumptions and therefore, we may continue without transformating our data to fit this assumption.  
+Examining the histogram of math scores across each of the three different classroom treatments, we can see that the scores of each treatment appear to follow a normal-like distribution. We can also note that each treatment distribution has slightly heavy left-tails; however, they do not deviate too much from our model assumptions and therefore, we may continue without transforming our data to fit this assumption.  
 ```{r, echo = FALSE, warning=FALSE}
 div(hist2 %>% 
       layout(autosize = F, width = 700, height = 400),
@@ -378,21 +383,21 @@ div(hist2 %>%
 
 2) Independence
 
-It is not reasonable to assume a strict independce of our samples through this study. Studnets may study together, teachers may share materials, or parents may seek out tutoring for thier child. However, this study represnets the most controlled and rhobust method we could possible obtain to examine the effects of class size of math test scores of first graders. Paired with the large sample size, while these smaples are not strictly independnet we can consider them practically indepenent since the study represents the most controlled enviorment we could possible obtain.
+It is not reasonable to assume a strict independence of our samples through this study. Students may study together, teachers may share materials, or parents may seek out tutoring for their child. However, this study represents the most controlled and robust method we could possible obtain to examine the effects of class size of math test scores of first graders. Paired with the large sample size, while these samples are not strictly independent we can consider them practically independent since the study represents the most controlled environment we could possible obtain.
 
 3) Equality of Variance
 
-From the histograms pictured above, it does appear that the distribution of first-grade test scores across the three treatments have the same varaince. And after specifying an alpha of $.o5$ The lavene test for euality of variances did not return significnat evidnce that the variances between grops was significantly different. Therefore, we may assume equaltiy of variances between treatment groups. 
+From the histograms pictured above, it does appear that the distribution of first-grade test scores across the three treatments have the same variance. And after specifying an alpha of $.05$ The lavene test for equality of variances did not return significant evidence that the variances between groups was significantly different. Therefore, we may assume equality of variances between treatment groups. 
 
 ```{r, echo=FALSE}
 leveneTest(math1~star1, data = star) #Equal Variacnes
 ```
 
-With all three of our model assumptions verrifeid, we can continue to fit our ANOVA model.
+With all three of our model assumptions verified, we can continue to fit our ANOVA model.
 
 #### Model Results
 
-After fitting the cell means model described above, we found significnat evidence to suggust that at least one of the classroom treatments exhibited a different score distribtion compared to that of regular class size.
+After fitting the cell means model described above, we found significant evidence to suggest that at least one of the classroom treatments exhibited a different score distribution compared to that of regular class size.
 
 ```{r, echo=FALSE}
 anova1
@@ -428,7 +433,7 @@ a = plot(reg1, which = c(2))
 
 2) Independence
 
-From the Residual vs Fitted plot below, it is clear that our data is independnet and randomly distributed about zero. Therefore, we can satisfy our assumption of independnce. 
+From the Residual vs Fitted plot below, it is clear that our data is independnet and randomly distributed about zero. Therefore, we can satisfy our assumption of independence. 
 
 ```{r, echo=FALSE, fig.align="center"}
 plot(reg1, which = c(1))
@@ -441,7 +446,7 @@ Finally, the histogram of residuals below show that thier distribution in each o
 With all three model assumptions supported by residuals, we move forward and validate this model. That is to say, this model is behaving the way we expect it to and is therefore a useful and informative model.
 
 ```{r , echo=FALSE, fig.align="center"}
-hist(reg1$residuals, main = "Historgram of Residuals")
+hist(reg1$residuals, main = "Histogram of Residuals")
 ```
 
 
@@ -483,8 +488,14 @@ knitr::kable(cit)  %>%  kable_styling(full_width = F)
 Our ANOVA model and confidence intervals all demonstrated significnat evidnece that the scaled math scores for first grade studnets in small and regular + aide classes were both significnalty higher than the scaled math scored for studnts enrolled in regular classes. 
 
 ***
-
 # Conclusions
+
+Through our analysis, we found significant evidence which demonstrated that on average, students enrolled in both small & regular + aide classes outperformed their peers enrolled in regular sized classes in first-grade math. Because of the high sample size and the rigorously randomized nature of the study, we may make a limited causal inference into the effect of class sizes on a student's mathematical performance. With over 6,000 overvaluations of first grade students, we feel confident that we have observed the potential average outcomes of each of the three treatments. Because of this, we can conclude that, the student to teacher ratios in first grade math classes have a causal relationship with the average performance on a standardized math test.
+
+While we can not make any specific conclusions about the causal effect of class size with an individual student's performance, our average causal conclusion is of great significant as policy makers and educators. We have demonstrated that Tennessee students enrolled in smaller class sizes in the first grade help them perform better, on average, on the standardized math test. With this conclusion, schools should attempt to provide their students with the best student to teacher ratio possible to provide them the best opportunity to learn and perform on standardized math tests.  
+
+***
+***
 
 
 
