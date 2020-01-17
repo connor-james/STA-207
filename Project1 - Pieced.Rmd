@@ -306,6 +306,13 @@ These questions are of important to education policymakers. The answers to these
 
 There are 11,598 rows and 47 columns in the STAR data set. Each row represents a student that participated in the experimental phase for at least one year. Each column represents information including demographic variables. This variables include school type, class type, and scores from different subject tests. For our analysis, we will primarily focus on the type of class and the scaled math score of first graders. 
 
+The table below shows descriptive statistics of the 1st grade students in the data set, after removing records with missing values.
+
+```{r, echo = FALSE}
+table1(~gender + ethnicity + math1 | star1, data =star)
+```
+
+<br />
 The distribution of the number of 1st grade students in each class type is displayed in the pie chart below:
 
 ```{r, echo=FALSE, warning=FALSE}
